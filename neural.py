@@ -1,6 +1,6 @@
 from sklearn.neural_network import MLPClassifier
 import pickle
-
+import numpy
 
 
 categories = pickle.load(open("eBay_categories.pkl","rb"))
@@ -25,7 +25,7 @@ for key in training.keys():
                 pass
     index += 1
 
-clf.partial_fit(X,Y)
+clf.partial_fit(X,Y,numpy.unique(Y))
 pickle.dump(clf, open("neuralnetwork.pkl","wb"))
 print("Operation successful")
 
