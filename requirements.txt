@@ -1,5 +1,4 @@
 bs4
-urllib
 gensim
 nltk
 google
