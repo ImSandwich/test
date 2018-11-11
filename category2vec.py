@@ -9,10 +9,12 @@ import pickle
 categories = pickle.load(open("eBay_categories.pkl","rb"))
 s = set(stopwords.words("english"))
 document = []
+training_set = {}
 #Find all relevant paragraphs, tokenize, generate word vec
 count = 0
 for key in categories.keys():
     for sub_category in categories[key]:
+        training_set[sub_category] = []
         count+=1
         print("Handling subcategory " + str(count))
         response = search(sub_category, tld="com", num=3, start=0, stop=1, pause=1)
@@ -24,14 +26,14 @@ for key in categories.keys():
                 paragraphs = soup.findAll("p")
                 for paragraph in paragraphs:
                     sentence = word_tokenize(paragraph.text)
-                    filtered_sentence = [w for w in sentence if w not in s]
-                    if (sub_category not in filtered_sentence):
-                        filtered_sentence.append(sub_category)
+                    filtered_sentence = [w.lower() for w in sentence if w not in s]
                     document.append(filtered_sentence)
+                    training_set[sub_category].append(filtered_sentence)
                 uContent.close()
             except:
                 pass
-
+pickle.dump(document, open("document.pkl","wb"))
+pickle.dump(training_set, open("training.pkl","wb"))
 model = Word2Vec(document, size=150, window=10, min_count=2, workers=10)
 pickle.dump(model, open("model.pkl","wb"))
-model.wv.most_similar(positive="Golf")
+#model.wv.most_similar(positive="Boat Parts")
