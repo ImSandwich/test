@@ -25,7 +25,7 @@ for key in training.keys():
                 pass
     index += 1
 
-clf.fit(X,Y)
+clf.partial_fit(X,Y)
 pickle.dump(clf, open("neuralnetwork.pkl","wb"))
 print("Operation successful")
 
