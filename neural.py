@@ -9,7 +9,7 @@ documents = pickle.load(open("document.pkl", "rb"))
 training = pickle.load(open("training.pkl", "rb"))
 #nn = pickle.load(open("neuralnetwork.pkl","rb"))
 
-clf = MLPClassifier(solver='lbfgs', hidden_layer_sizes=(100,))
+clf = MLPClassifier(solver='sgd', hidden_layer_sizes=(100,))
 X = []
 Y = []
 index = 0
