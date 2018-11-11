@@ -9,11 +9,7 @@ uClient.close()
 categories = {}
 soup = BeautifulSoup(content, "html.parser")
 sub_categories = soup.findAll("li",{"class":"sub-category"})
-limit = 30
 for i in sub_categories:
-    limit-=1
-    if (limit==0):
-        break
     sub_category = (i.text.split("-")[0]).strip()
     main_category = (i.text.split("-")[1]).strip()
     if (main_category not in categories.keys()):
